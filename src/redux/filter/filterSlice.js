@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { addContact } from './../contacts/contactOperations';
 
 export const filterSlice = createSlice({
   name: 'filter',
@@ -9,6 +10,11 @@ export const filterSlice = createSlice({
     filterContact(state, { payload }) {
       state.value = payload;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(addContact.pending, state => {
+      state.value = '';
+    });
   },
 });
 

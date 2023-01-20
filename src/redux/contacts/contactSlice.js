@@ -1,5 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from './contactOperations';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  updateContact,
+} from './contactOperations';
 
 function pending(state) {
   state.isLoading = true;
@@ -15,6 +20,9 @@ function fulfilled(state) {
   state.error = null;
 }
 
+const extraActions = [fetchContacts, addContact, deleteContact, updateContact];
+const getActions = type => extraActions.map(action => action[type]);
+
 const contactSlice = createSlice({
   name: 'contact',
   initialState: {
@@ -22,27 +30,28 @@ const contactSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  extraReducers: {
-    [addContact.pending]: pending,
-    [fetchContacts.pending]: pending,
-    [deleteContact.pending]: pending,
+  extraReducers: builder => {
+    builder
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.items.push(payload);
+      })
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.items = payload;
+      })
+      .addCase(updateContact.fulfilled, (state, { payload }) => {
+        state.items = state.items.map(item => {
+          return (item = item.id === payload.id ? payload : item);
+        });
+      })
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.items = state.items.filter(contact => contact.id !== payload);
+      })
 
-    [fetchContacts.fulfilled]: (state, { payload }) => {
-      state.items = payload;
-      fulfilled(state);
-    },
-    [addContact.fulfilled]: (state, { payload }) => {
-      state.items.push(payload);
-      fulfilled(state);
-    },
-    [deleteContact.fulfilled]: (state, { payload }) => {
-      state.items = state.items.filter(contact => contact.id !== payload);
-      fulfilled(state);
-    },
-
-    [fetchContacts.rejected]: rejected,
-    [addContact.rejected]: rejected,
-    [deleteContact.rejected]: rejected,
+      .addMatcher(isAnyOf(...getActions('pending')), pending)
+      .addMatcher(isAnyOf(...getActions('rejected')), rejected)
+      .addMatcher(isAnyOf(...getActions('fulfilled')), state =>
+        fulfilled(state)
+      );
   },
 });
 

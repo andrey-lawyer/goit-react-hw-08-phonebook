@@ -21,14 +21,42 @@ export const ButtonDel = styled.button`
   margin-right: 20px;
   width: 80px;
   padding: 3px;
-  background-color: #e0ffff;
-  border: solid 1px;
-  border-radius: 2px;
+
+  border-radius: 5px;
+
+  background-color: white;
   cursor: pointer;
 
   :hover,
   focus {
     transform: scale(1.05);
-    background-color: rgb(135, 206, 250);
+    background: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+    color: white;
   }
 `;
+
+export const ButtonEdit = styled.button`
+  margin-right: 20px;
+  width: 80px;
+  padding: 3px;
+  border: none;
+  background: linear-gradient(
+    95.2deg,
+    rgb(173, 252, 234) 26.8%,
+    rgb(192, 229, 246) 64%
+  );
+  border-radius: 5px;
+  cursor: pointer;
+
+  :hover,
+  focus {
+    transform: scale(1.05);
+    background: linear-gradient(
+      to right,
+      rgb(182, 244, 146),
+      rgb(51, 139, 147)
+    );
+  }
+`;
+
+export const Buttons = styled.div``;

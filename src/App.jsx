@@ -1,89 +1,84 @@
-import React from 'react';
+import { lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThreeDots } from 'react-loader-spinner';
 import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
 
-import { useContacts } from './redux/selectors/selectors';
+import { useAuth } from 'hooks';
+import { authOperations } from './redux/auth';
 
-import ContactForm from './components/Form';
+import PrivateRoute from 'components/PrivateRoute';
+import PublicRoute from 'components/PublicRoute';
+import { Layout } from 'components/Header/Loyout';
 
-import { fetchContacts } from './redux/contacts/contactOperations';
+import { Container } from 'App.styled';
+import { GlobalStyle } from 'styles/GlobalStyle';
 
-import ContactList from './components/ListContacts';
-import Filter from './components/Filter';
-
-import { PhoneBook, TitleH1, TitleH2, Message, Loader } from 'App.styled';
+const HomePage = lazy(() => import('./page/HomePage/Homepage'));
+const RegisterPage = lazy(() => import('./page/RegisterAndLogin/RegisterPage'));
+const LoginPage = lazy(() => import('./page/RegisterAndLogin/LoginPage'));
+const ContactsPage = lazy(() => import('./page/ContactPage/ContactsPage'));
 
 const App = () => {
-  const { contacts, loading, error } = useContacts();
-
-  const notify = error =>
-    toast(`${error}! Something went wrong...`, {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
-
   const dispatch = useDispatch();
+  const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(authOperations.fetchCurrentUser());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (!error) return;
-    notify(error);
-  }, [error]);
-
-  return (
-    <PhoneBook>
-      <TitleH1>Phonebook</TitleH1>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <ToastContainer />
-      <ContactForm />
-      {loading && (
-        <Loader>
-          <ThreeDots
-            height="80"
-            width="80"
-            radius="9"
-            color="#4fa94d"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            wrapperClassName=""
-            visible={true}
-          />
-        </Loader>
-      )}
-      <TitleH2>Contacts</TitleH2>
-      {contacts.length === 0 ? (
-        <Message>Your phone book is empty, add a contact</Message>
-      ) : (
-        <>
-          <Filter />
-
-          <ContactList />
-        </>
-      )}
-    </PhoneBook>
+  return isRefreshing ? (
+    <ThreeDots
+      height="80"
+      width="80"
+      radius="9"
+      color="#1c25cd"
+      ariaLabel="three-dots-loading"
+      wrapperStyle={{}}
+      wrapperClassName=""
+      visible={true}
+    />
+  ) : (
+    <>
+      <Container>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<PublicRoute component={<HomePage />} />} />
+            <Route
+              path="/register"
+              element={
+                <PublicRoute
+                  restricted
+                  redirectTo="/contacts"
+                  component={<RegisterPage />}
+                />
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute
+                  restricted
+                  redirectTo="/contacts"
+                  component={<LoginPage />}
+                />
+              }
+            />
+            <Route
+              path="/contacts"
+              element={
+                <PrivateRoute
+                  redirectTo="/login"
+                  component={<ContactsPage />}
+                />
+              }
+            />
+          </Route>
+        </Routes>
+      </Container>
+      <GlobalStyle />
+    </>
   );
 };
 

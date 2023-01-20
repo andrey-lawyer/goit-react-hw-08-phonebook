@@ -1,16 +1,30 @@
 import styled from 'styled-components';
+export const Registration = styled.section`
+  padding: 20px;
+  background: linear-gradient(
+    179.2deg,
+    rgb(21, 21, 212) 0.9%,
+    rgb(53, 220, 243) 95.5%
+  );
+  color: white;
+`;
 
-export const FormUser = styled.form`
+export const TitleH1 = styled.h1`
+  margin: 0;
+  text-align: center;
+`;
+
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   border-radius: 2px;
   padding: 10px;
 `;
-export const LabelUser = styled.label`
+export const Label = styled.label`
   margin-bottom: 5px;
 `;
 
-export const InputUser = styled.input`
+export const Input = styled.input`
   width: 300px;
   height: 24px;
   font-size: 16px;
@@ -22,18 +36,17 @@ export const InputUser = styled.input`
   border-radius: 4px;
   padding: 5px;
   margin-bottom: 10px;
+  margin-top: 5px;
+
+  display: block;
 `;
-export const ButtonAdd = styled.button`
-  width: 100px;
+export const Button = styled.button`
+  width: 120px;
   margin: 0 auto;
   margin-top: 10px;
-  padding: 3px;
+  padding: 5px;
 
-  background: linear-gradient(
-    95.2deg,
-    rgb(173, 252, 234) 26.8%,
-    rgb(192, 229, 246) 64%
-  );
+  background-color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;

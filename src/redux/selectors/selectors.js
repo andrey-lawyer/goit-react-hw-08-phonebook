@@ -1,12 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 
 import { selectFilter } from './../../redux/filter/selectFilter';
-import {
-  selectContacts,
-  selectLoading,
-  selectError,
-} from './../../redux/contacts/selectContacts';
-import { useSelector } from 'react-redux';
+import { selectContacts } from './../../redux/contacts/selectContacts';
 
 export const selectGetVisibleContacts = createSelector(
   [selectContacts, selectFilter],
@@ -16,10 +11,3 @@ export const selectGetVisibleContacts = createSelector(
     );
   }
 );
-
-export const useContacts = () => {
-  const contacts = useSelector(selectContacts);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  return { contacts, loading, error };
-};
