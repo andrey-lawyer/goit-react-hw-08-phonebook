@@ -3,7 +3,7 @@ import {
   selectContacts,
   selectError,
   selectLoading,
-} from 'redux/contacts/selectContacts';
+} from 'redux/contacts/contactsSelectors';
 
 export const useContacts = () => {
   const contacts = useSelector(selectContacts);

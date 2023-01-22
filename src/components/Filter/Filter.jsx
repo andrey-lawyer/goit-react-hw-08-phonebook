@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 
 import { filterContact } from '../../redux/filter/filterSlice';
-import { selectFilter } from '../../redux/filter/selectFilter';
+import { selectFilter } from '../../redux/filter/filterSelectors';
 
 import { FieldInput, InputFind } from './Filter.styled';
 

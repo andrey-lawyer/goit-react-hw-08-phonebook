@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import authOperations from './auth-operations';
+import authOperations from './authOperations';
 
 const initialState = {
   user: { name: null, email: null },
@@ -27,6 +27,7 @@ const extraActions = [
   authOperations.register,
   authOperations.logIn,
   authOperations.logOut,
+  authOperations.fetchCurrentUser,
 ];
 
 const getActions = type => extraActions.map(action => action[type]);
@@ -53,7 +54,6 @@ const authSlice = createSlice({
       })
 
       .addCase(authOperations.fetchCurrentUser.pending, state => {
-        pending(state);
         state.isRefreshingUser = true;
       })
       .addCase(
@@ -61,14 +61,12 @@ const authSlice = createSlice({
         (state, { payload }) => {
           state.user = payload;
           state.isLoggedIn = true;
-          fulfilled(state);
           state.isRefreshingUser = false;
         }
       )
       .addCase(
         authOperations.fetchCurrentUser.rejected,
         (state, { payload }) => {
-          rejected(state, { payload });
           state.isRefreshingUser = false;
         }
       )

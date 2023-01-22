@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { ThreeDots } from 'react-loader-spinner';
-import { ToastContainer, toast } from 'react-toastify';
 
 import { fetchContacts } from 'redux/contacts/contactOperations';
 
@@ -19,21 +17,11 @@ import {
   TitleBook,
 } from './ContactPage.styled';
 import { useContacts } from 'hooks/useContacts';
+import { notify } from 'services/phoneBookApi';
+import { MyThreeDots } from 'components/Loaders/MyThreeDots';
 
 export const ContactsPage = () => {
   const { contacts, loading, error } = useContacts();
-
-  const notify = error =>
-    toast(`${error}! Something went wrong...`, {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
 
   const dispatch = useDispatch();
 
@@ -50,32 +38,10 @@ export const ContactsPage = () => {
     <Contacts>
       <TitleBook>Phonebook</TitleBook>
       <>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-        <ToastContainer />
         <ContactForm />
         {loading && (
           <Loader>
-            <ThreeDots
-              height="80"
-              width="80"
-              radius="9"
-              color="#4fa94d"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClassName=""
-              visible={true}
-            />
+            <MyThreeDots />
           </Loader>
         )}
         <TitleH2>Your contacts</TitleH2>
@@ -84,7 +50,6 @@ export const ContactsPage = () => {
         ) : (
           <>
             <Filter />
-
             <ContactList />
           </>
         )}

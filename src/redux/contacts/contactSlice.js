@@ -49,9 +49,7 @@ const contactSlice = createSlice({
 
       .addMatcher(isAnyOf(...getActions('pending')), pending)
       .addMatcher(isAnyOf(...getActions('rejected')), rejected)
-      .addMatcher(isAnyOf(...getActions('fulfilled')), state =>
-        fulfilled(state)
-      );
+      .addMatcher(isAnyOf(...getActions('fulfilled')), fulfilled);
   },
 });
 

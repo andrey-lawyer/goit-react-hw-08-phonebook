@@ -12,7 +12,7 @@ import {
 } from './LoginAndRegister.styled';
 import { useAuth } from 'hooks';
 import { toast } from 'react-toastify';
-import { ThreeDots } from 'react-loader-spinner';
+import { MyThreeDots } from 'components/Loaders/MyThreeDots';
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -99,18 +99,7 @@ export default function RegisterPage() {
           <Button type="submit">Create Account</Button>
         </Form>
       </Registration>
-      {loading && (
-        <ThreeDots
-          height="80"
-          width="80"
-          radius="9"
-          color="#4fa94d"
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{}}
-          wrapperClassName=""
-          visible={true}
-        />
-      )}
+      {loading && <MyThreeDots />}
     </main>
   );
 }

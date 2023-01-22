@@ -1,6 +1,6 @@
 import { useAuth } from 'hooks';
 import { Navigate } from 'react-router-dom';
-
+import { routes } from 'routes/routes';
 /**
  * - Если маршрут ограниченный, и юзер залогинен, рендерит редирект на redirectTo
  * - В противном случае рендерит компонент
@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom';
 
 export default function PublicRoute({
   restricted = false,
-  redirectTo = '/',
+  redirectTo = routes.HOME.path,
   component: Component,
 }) {
   const { isLoggedIn } = useAuth();

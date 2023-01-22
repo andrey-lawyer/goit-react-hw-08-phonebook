@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 import { authOperations } from '../../redux/auth';
@@ -13,26 +12,14 @@ import {
   Input,
   Label,
 } from './LoginAndRegister.styled';
-import { ThreeDots } from 'react-loader-spinner';
+import { notify } from 'services/phoneBookApi';
+import { MyThreeDots } from 'components/Loaders/MyThreeDots';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const { error, loading } = useAuth();
-
-  const notify = error =>
-    toast(`${error}! Something went wrong...`, {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
 
   useEffect(() => {
     if (!error) return;
@@ -71,7 +58,6 @@ export default function LoginPage() {
               onChange={handleChange}
             />
           </Label>
-
           <Label>
             Password
             <Input
@@ -81,22 +67,10 @@ export default function LoginPage() {
               onChange={handleChange}
             />
           </Label>
-
           <Button type="submit">Log In</Button>
         </Form>
       </Registration>
-      {loading && (
-        <ThreeDots
-          height="80"
-          width="80"
-          radius="9"
-          color="#4fa94d"
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{}}
-          wrapperClassName=""
-          visible={true}
-        />
-      )}
+      {loading && <MyThreeDots />}
     </main>
   );
 }

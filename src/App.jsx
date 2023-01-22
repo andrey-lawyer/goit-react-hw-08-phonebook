@@ -14,6 +14,7 @@ import { Layout } from 'components/Header/Loyout';
 
 import { Container } from 'App.styled';
 import { GlobalStyle } from 'styles/GlobalStyle';
+import { routes } from './routes/routes';
 
 const HomePage = lazy(() => import('./page/HomePage/Homepage'));
 const RegisterPage = lazy(() => import('./page/RegisterAndLogin/RegisterPage'));
@@ -23,6 +24,8 @@ const ContactsPage = lazy(() => import('./page/ContactPage/ContactsPage'));
 const App = () => {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
+
+  const { HOME, CONTACTS, LOGIN, REGISTER } = routes;
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
@@ -43,33 +46,33 @@ const App = () => {
     <>
       <Container>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path={HOME.path} element={<Layout />}>
             <Route index element={<PublicRoute component={<HomePage />} />} />
             <Route
-              path="/register"
+              path={REGISTER.relativePath}
               element={
                 <PublicRoute
                   restricted
-                  redirectTo="/contacts"
+                  redirectTo={CONTACTS.absolutePath}
                   component={<RegisterPage />}
                 />
               }
             />
             <Route
-              path="/login"
+              path={LOGIN.relativePath}
               element={
                 <PublicRoute
                   restricted
-                  redirectTo="/contacts"
+                  redirectTo={CONTACTS.absolutePath}
                   component={<LoginPage />}
                 />
               }
             />
             <Route
-              path="/contacts"
+              path={CONTACTS.relativePath}
               element={
                 <PrivateRoute
-                  redirectTo="/login"
+                  redirectTo={LOGIN.absolutePath}
                   component={<ContactsPage />}
                 />
               }

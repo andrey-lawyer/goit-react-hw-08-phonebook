@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { selectFilter } from './../../redux/filter/selectFilter';
-import { selectContacts } from './../../redux/contacts/selectContacts';
+import { selectFilter } from '../filter/filterSelectors';
+import { selectContacts } from '../contacts/contactsSelectors';
 
 export const selectGetVisibleContacts = createSelector(
   [selectContacts, selectFilter],

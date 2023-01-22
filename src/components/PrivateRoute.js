@@ -1,5 +1,6 @@
 import { useAuth } from 'hooks';
 import { Navigate } from 'react-router-dom';
+import { routes } from 'routes/routes';
 
 /**
  * - Если маршрут приватный и пользователь залогинен, рендерит компонент
@@ -8,7 +9,7 @@ import { Navigate } from 'react-router-dom';
 
 export default function PrivateRoute({
   component: Component,
-  redirectTo = '/',
+  redirectTo = routes.HOME.path,
 }) {
   const { isLoggedIn, isRefreshing } = useAuth();
   const shouldRedirect = !isLoggedIn && !isRefreshing;

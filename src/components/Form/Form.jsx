@@ -1,9 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { nanoid } from 'nanoid';
 
-import { selectContacts } from '../../redux/contacts/selectContacts';
+import { selectContacts } from '../../redux/contacts/contactsSelectors';
 import { addContact } from '../../redux/contacts/contactOperations';
 
 import { FormUser, LabelUser, InputUser, ButtonAdd } from './Form.styled';
@@ -23,7 +24,7 @@ const ContactForm = () => {
       item => item.name.toLowerCase() === name.toLowerCase()
     );
     if (isInConacts) {
-      return alert(`${name} is already in contacts`);
+      return toast(`${name} is already in contacts`);
     }
 
     dispatch(addContact({ name, number }));
