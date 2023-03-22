@@ -40,11 +40,11 @@ const contactSlice = createSlice({
       })
       .addCase(updateContact.fulfilled, (state, { payload }) => {
         state.items = state.items.map(item => {
-          return (item = item.id === payload.id ? payload : item);
+          return (item = item._id === payload._id ? payload : item);
         });
       })
       .addCase(deleteContact.fulfilled, (state, { payload }) => {
-        state.items = state.items.filter(contact => contact.id !== payload);
+        state.items = state.items.filter(contact => contact._id !== payload);
       })
 
       .addMatcher(isAnyOf(...getActions('pending')), pending)

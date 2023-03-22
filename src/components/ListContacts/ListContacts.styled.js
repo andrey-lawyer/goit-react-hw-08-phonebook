@@ -17,6 +17,10 @@ export const Phone = styled.p`
   margin: 0;
   width: 180px;
 `;
+export const Email = styled.p`
+  margin: 0;
+  width: 160px;
+`;
 export const ButtonDel = styled.button`
   margin-right: 20px;
   width: 80px;

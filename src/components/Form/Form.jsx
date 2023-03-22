@@ -11,15 +11,18 @@ import { FormUser, LabelUser, InputUser, ButtonAdd } from './Form.styled';
 
 const loginInputIdName = nanoid();
 const loginInputIdNumber = nanoid();
+const loginInputIdEmail = nanoid();
 
 const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
     const name = form.elements.name.value;
-    const number = form.elements.number.value;
+    const email = form.elements.email.value;
+    const phone = form.elements.phone.value;
     const isInConacts = contacts.some(
       item => item.name.toLowerCase() === name.toLowerCase()
     );
@@ -27,9 +30,10 @@ const ContactForm = () => {
       return toast(`${name} is already in contacts`);
     }
 
-    dispatch(addContact({ name, number }));
-    form.elements.number.value = '';
+    dispatch(addContact({ name, phone, email }));
+    form.elements.phone.value = '';
     form.elements.name.value = '';
+    form.elements.email.value = '';
   };
 
   return (
@@ -44,12 +48,13 @@ const ContactForm = () => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
-
-        <LabelUser htmlFor={loginInputIdNumber}>Number</LabelUser>
+        <LabelUser htmlFor={loginInputIdEmail}>Email</LabelUser>
+        <InputUser id={loginInputIdEmail} type="email" name="email" required />
+        <LabelUser htmlFor={loginInputIdNumber}>Phone</LabelUser>
         <InputUser
           id={loginInputIdNumber}
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required

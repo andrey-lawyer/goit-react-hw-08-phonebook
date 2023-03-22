@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
+axios.defaults.baseURL = 'https://contactsbook.onrender.com/api/';
 
 export async function getContacts() {
   const { data } = await axios.get(`/contacts`);
@@ -18,8 +18,8 @@ export async function deleteContact(contactId) {
   return data;
 }
 
-export async function updateContact({ id, name, number }) {
-  const { data } = await axios.patch(`/contacts/${id}`, { name, number });
+export async function updateContact({ _id, name, phone, email }) {
+  const { data } = await axios.put(`/contacts/${_id}`, { name, phone, email });
   return data;
 }
 

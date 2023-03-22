@@ -16,7 +16,7 @@ import { MyThreeDots } from 'components/Loaders/MyThreeDots';
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
+  // const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -41,8 +41,8 @@ export default function RegisterPage() {
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
-      case 'name':
-        return setName(value);
+      // case 'name':
+      //   return setName(value);
       case 'email':
         return setEmail(value);
       case 'password':
@@ -54,8 +54,14 @@ export default function RegisterPage() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(authOperations.register({ name, email, password }));
-    setName('');
+    dispatch(
+      authOperations.register({
+        //  name,
+        email,
+        password,
+      })
+    );
+    // setName('');
     setEmail('');
     setPassword('');
   };
@@ -66,7 +72,7 @@ export default function RegisterPage() {
         <TitleH1>Enter your registration details, please</TitleH1>
 
         <Form onSubmit={handleSubmit} autoComplete="off">
-          <Label>
+          {/* <Label>
             Name
             <Input
               type="text"
@@ -74,7 +80,7 @@ export default function RegisterPage() {
               value={name}
               onChange={handleChange}
             />
-          </Label>
+          </Label> */}
 
           <Label>
             E-mail

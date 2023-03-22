@@ -12,6 +12,7 @@ import {
   ListContacts,
   Phone,
   Buttons,
+  Email,
 } from './ListContacts.styled';
 import { useEffect } from 'react';
 
@@ -19,6 +20,7 @@ const ContactList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {}, []);
+
   const visibleContacts = useSelector(selectGetVisibleContacts);
   const [contact, setContact] = useState(null);
   const onClickModal = contactModal => {
@@ -32,20 +34,22 @@ const ContactList = () => {
   return (
     <>
       <ListContacts>
-        {visibleContacts.map(({ name, number, id }) => (
-          <ItemContact key={id}>
+        {visibleContacts.map(({ name, phone, email, _id }) => (
+          <ItemContact key={name}>
             <NameUser>{name}:</NameUser>
-            <Phone>{number}</Phone>
+            <Phone>{phone}</Phone>
+            <Email>{email}</Email>
+
             <Buttons>
               <ButtonEdit
                 type="button"
-                onClick={() => onClickModal({ name, number, id })}
+                onClick={() => onClickModal({ name, phone, email, _id })}
               >
                 Edit
               </ButtonEdit>
               <ButtonDel
                 type="button"
-                onClick={() => dispatch(deleteContact(id))}
+                onClick={() => dispatch(deleteContact(_id))}
               >
                 Delete
               </ButtonDel>

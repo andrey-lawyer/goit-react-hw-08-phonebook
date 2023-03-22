@@ -16,7 +16,7 @@ export const Overlay = styled.div`
 export const ModalWindow = styled.div`
   background: linear-gradient(-225deg, #5d9fff 0%, #b8dcff 48%, #6bbbff 100%);
   border-radius: 5px;
-  max-width: calc(100vw - 48px);
+  max-width: calc(100vw - 28px);
   max-height: calc(100vh - 24px);
 `;
 

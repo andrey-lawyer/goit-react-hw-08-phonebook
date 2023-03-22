@@ -15,8 +15,9 @@ import { useDispatch } from 'react-redux';
 import { updateContact } from '../../redux/contacts/contactOperations';
 const loginInputIdName = nanoid();
 const loginInputIdNumber = nanoid();
+const loginInputIdEmail = nanoid();
 
-const Modal = ({ contact: { name, number, id }, onClickContact }) => {
+const Modal = ({ contact: { name, phone, email, _id }, onClickContact }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,9 +42,10 @@ const Modal = ({ contact: { name, number, id }, onClickContact }) => {
     e.preventDefault();
     const form = e.currentTarget;
     const name = form.elements.name.value;
-    const number = form.elements.number.value;
+    const phone = form.elements.phone.value;
+    const email = form.elements.email.value;
 
-    const contact = { id, name, number };
+    const contact = { _id, name, phone, email };
     dispatch(updateContact(contact));
     onClickContact();
   };
@@ -67,11 +69,19 @@ const Modal = ({ contact: { name, number, id }, onClickContact }) => {
           <Label htmlFor={loginInputIdNumber}>Number</Label>
           <Input
             id={loginInputIdNumber}
-            defaultValue={number}
+            defaultValue={phone}
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+          />
+          <Label htmlFor={loginInputIdEmail}>Email</Label>
+          <Input
+            id={loginInputIdEmail}
+            defaultValue={email}
+            type="email"
+            name="email"
             required
           />
           <Button type="submit">Ok</Button>

@@ -11,7 +11,7 @@ export default function UserMenu() {
 
   return (
     <BlockUser>
-      <span>👌 You are welcome , {user.name}</span>
+      <span>👌 You are welcome, {user.email}</span>
       <ButtonLogOut
         type="button"
         onClick={() => dispatch(authOperations.logOut())}
